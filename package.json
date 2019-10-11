@@ -2,7 +2,7 @@
   "name": "mockjs",
   "title": "Mock.js",
   "description": "生成随机数据 & 拦截 Ajax 请求",
-  "version": "1.0.1-beta3",
+  "version": "1.0.1-beta4",
   "homepage": "http://mockjs.com/",
   "keywords": [
     "mock",
@@ -10,6 +10,9 @@
     "mockAjax"
   ],
   "author": "nuysoft@gmail.com",
+  "contributors": [
+    "sage417@foxmail.com"
+  ],
   "dependencies": {
     "commander": "*"
   },
@@ -31,6 +34,7 @@
   },
   "main": "./dist/mock.js",
   "scripts": {
+    "build": "gulp webpack",
     "test": "gulp mocha",
     "coveralls": "gulp coveralls"
   },

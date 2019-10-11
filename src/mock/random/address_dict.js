@@ -4065,4 +4065,4 @@ var DICT_FIXED = function() {
     return tree(fixed)
 }()
 
-module.exports = DICT_FIXED
+module.exports = {DICT_FIXED, DICT}

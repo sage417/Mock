@@ -3,6 +3,7 @@
 */
 
 var Util = require('../util')
+var { natural, shuffle} = require('./basic')
 
 module.exports = {
 	// 把字符串的第一个字母转换为大写。
@@ -32,23 +33,23 @@ module.exports = {
 			if (max === undefined) max = min
 		}
 
-		if (min === 1 && max === 1) return arr[this.natural(0, arr.length - 1)]
+		if (min === 1 && max === 1) return arr[natural(0, arr.length - 1)]
 
 		// pick( [ item1, item2 ... ], min, max )
-		return this.shuffle(arr, min, max)
+		return shuffle(arr, min, max)
 
 		// 通过参数个数判断方法签名，扩展性太差！#90
 		// switch (arguments.length) {
 		// 	case 1:
 		// 		// pick( [ item1, item2 ... ] )
-		// 		return arr[this.natural(0, arr.length - 1)]
+		// 		return arr[natural(0, arr.length - 1)]
 		// 	case 2:
 		// 		// pick( [ item1, item2 ... ], count )
 		// 		max = min
 		// 			/* falls through */
 		// 	case 3:
 		// 		// pick( [ item1, item2 ... ], min, max )
-		// 		return this.shuffle(arr, min, max)
+		// 		return shuffle(arr, min, max)
 		// }
 	},
 	/*
@@ -68,7 +69,7 @@ module.exports = {
 			index = 0,
 			length = old.length;
 		for (var i = 0; i < length; i++) {
-			index = this.natural(0, old.length - 1)
+			index = natural(0, old.length - 1)
 			result.push(old[index])
 			old.splice(index, 1)
 		}
@@ -82,7 +83,7 @@ module.exports = {
 			case 3:
 				min = parseInt(min, 10)
 				max = parseInt(max, 10)
-				return result.slice(0, this.natural(min, max))
+				return result.slice(0, natural(min, max))
 		}
 	},
 	/*

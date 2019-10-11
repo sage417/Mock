@@ -1,7 +1,7 @@
 /*
     ## Miscellaneous
 */
-var DICT = require('./address_dict')
+var {DICT_FIXED} = require('./address_dict')
 module.exports = {
 	// Dice
 	d4: function() {
@@ -67,7 +67,7 @@ module.exports = {
 	        地址码 6 + 出生日期码 8 + 顺序码 3 + 校验码 1
 	    [《中华人民共和国行政区划代码》国家标准(GB/T2260)](http://zhidao.baidu.com/question/1954561.html)
 	*/
-	id: function() {
+	id: function(gender) {
 		var id,
 			sum = 0,
 			rank = [
@@ -77,9 +77,15 @@ module.exports = {
 				"1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2"
 			]
 
-		id = this.pick(DICT).id +
+		var seq = this.natural(101, 999)
+
+		if (gender != undefined && gender != seq % 2) {
+			seq -= 1
+		}
+
+		id = this.pick(DICT_FIXED).id +
 			this.date('yyyyMMdd') +
-			this.string('number', 3)
+			seq
 
 		for (var i = 0; i < id.length; i++) {
 			sum += id[i] * rank[i];
