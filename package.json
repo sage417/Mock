@@ -14,7 +14,8 @@
     "sage417@foxmail.com"
   ],
   "dependencies": {
-    "commander": "*"
+    "commander": "*",
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
     "gulp": "^3.9.0",

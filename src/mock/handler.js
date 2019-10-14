@@ -36,6 +36,7 @@ var Util = require('./util')
 var Parser = require('./parser')
 var Random = require('./random/')
 var RE = require('./regexp')
+let _lang = require('lodash/lang')
 
 var Handler = {
     extend: Util.extend
@@ -65,7 +66,7 @@ Handler.gen = function(template, name, context) {
             // 最终属性值的上下文
             currentContext: context.currentContext,
             // 属性值模板的上下文
-            templateCurrentContext: context.templateCurrentContext || template,
+            templateCurrentContext: context.templateCurrentContext || _lang.cloneDeep(template),
             // 最终值的根
             root: context.root || context.currentContext,
             // 模板的根
@@ -389,7 +390,7 @@ Handler.extend({
     placeholder: function(placeholder, obj, templateContext, options) {
         // console.log(options.context.path)
         // 1 key, 2 params
-        Constant.RE_PLACEHOLDER.exec('')
+        Constant.RE_PLACEHOLDER.lastIndex = 0
         var parts = Constant.RE_PLACEHOLDER.exec(placeholder),
             key = parts && parts[1],
             lkey = key && key.toLowerCase(),
@@ -447,7 +448,7 @@ Handler.extend({
 
         // 递归解析参数中的占位符
         for (var i = 0; i < params.length; i++) {
-            Constant.RE_PLACEHOLDER.exec('')
+            Constant.RE_PLACEHOLDER.lastIndex = 0
             if (Constant.RE_PLACEHOLDER.test(params[i])) {
                 params[i] = Handler.placeholder(params[i], obj, templateContext, options)
             }
