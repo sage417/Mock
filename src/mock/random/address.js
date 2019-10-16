@@ -13,7 +13,7 @@ let _city = function (provinceCode) {
     var province
     if (provinceCode) province = DICT_FIXED.find(p => p.id === provinceCode)
     if (!province) province = pick(DICT_FIXED)
-    return pick(province.children)
+    return pick(province.children) || { id: 0, name: '-' }
 }
 
 let _county = function (provinceCode, cityCode) {
@@ -24,8 +24,9 @@ let _county = function (provinceCode, cityCode) {
     var city
     if (cityCode) city = province.children.find(c => c.id === cityCode)
     if (!city) city = pick(province.children)
+    if (!city) return { id: 0, name: '-' }
 
-    return pick(city.children) || { name: '-' }
+    return pick(city.children) || { id: 0, name: '-' }
 }
 
 module.exports = {

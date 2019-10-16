@@ -3245,6 +3245,9 @@ var DICT = {
     "820000": "澳门特别行政区"
 }
 
+// 直辖市需处理成三级
+const municipalities = ['110000', '120000', '310000', '500000']
+
 // id pid/parentId name children
 function tree(list) {
     var mapped = {}
@@ -3260,14 +3263,21 @@ function tree(list) {
 
         if (!item) continue
         /* jshint -W041 */
-        if (item.pid == undefined && item.parentId == undefined) {
+        if (item.pid == undefined) {
             result.push(item)
             continue
         }
-        var parent = mapped[item.pid] || mapped[item.parentId]
+        var parent = mapped[item.pid]
         if (!parent) continue
         if (!parent.children) parent.children = []
         parent.children.push(item)
+    }
+
+    for (const idx in result) {
+        const province = result[idx]
+        if (municipalities.includes(province.id)) {
+            province.children = [{ ...province, pid: province.id, children: province.children }]
+        }
     }
     return result
 }
